@@ -8,6 +8,7 @@ License:	Public Domain
 Group:		Development/Languages/PHP
 Requires:	php-pcre
 Requires:	php-xml
+Provides:	php4-pear
 Obsoletes:	php-pear-additional_classes
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
