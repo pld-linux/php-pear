@@ -8,7 +8,6 @@ License:	Public Domain
 Group:		Development/Languages/PHP
 Requires:	php-pcre
 Requires:	php-xml
-Provides:	php4-pear
 Obsoletes:	php-pear-additional_classes
 Obsoletes:	php4-pear
 Provides:	php4-pear = %{epoch}:%{version}-%{release}
@@ -40,4 +39,18 @@ install -d $RPM_BUILD_ROOT%{php_pear_dir}/{Archive,Console,Crypt,HTML/Template,H
 
 %files
 %defattr(644,root,root,755)
-%{php_pear_dir}
+%dir %{php_pear_dir}
+%dir %{php_pear_dir}/Archive
+%dir %{php_pear_dir}/Console
+%dir %{php_pear_dir}/Crypt
+%dir %{php_pear_dir}/HTML
+%dir %{php_pear_dir}/HTML/Template
+%dir %{php_pear_dir}/HTTP
+%dir %{php_pear_dir}/Image
+%dir %{php_pear_dir}/Math
+%dir %{php_pear_dir}/Net
+%dir %{php_pear_dir}/PEAR
+%dir %{php_pear_dir}/Science
+%dir %{php_pear_dir}/Services
+%dir %{php_pear_dir}/Text
+%dir %{php_pear_dir}/XML
