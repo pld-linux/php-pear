@@ -37,9 +37,28 @@ php-pear-* (php-pear-PEAR, php-pear-Archive_Tar, itp).
 
 %install
 rm -rf $RPM_BUILD_ROOT
-# Directories created for pear:
-install -d $RPM_BUILD_ROOT%{php_pear_dir}/{Archive,Console,Crypt,HTML/Template,HTTP,Image,Math,Net,Numbers,PEAR,Science,Services,Text,XML} \
-	$RPM_BUILD_ROOT%{php_pear_dir}/data
+install -d $RPM_BUILD_ROOT%{php_pear_dir}/data
+
+while read dir; do
+	install -d $RPM_BUILD_ROOT$dir
+done <<EOF
+%{php_pear_dir}
+%{php_pear_dir}/Archive
+%{php_pear_dir}/Console
+%{php_pear_dir}/Crypt
+%{php_pear_dir}/HTML
+%{php_pear_dir}/HTML/Template
+%{php_pear_dir}/HTTP
+%{php_pear_dir}/Image
+%{php_pear_dir}/Math
+%{php_pear_dir}/Net
+%{php_pear_dir}/Numbers
+%{php_pear_dir}/PEAR
+%{php_pear_dir}/Science
+%{php_pear_dir}/Services
+%{php_pear_dir}/Text
+%{php_pear_dir}/XML
+EOF
 
 # registry
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{php_pear_dir}/.registry}
