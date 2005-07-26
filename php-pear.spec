@@ -42,7 +42,6 @@ install -d $RPM_BUILD_ROOT%{php_pear_dir}/data
 while read dir; do
 	install -d $RPM_BUILD_ROOT$dir
 done <<EOF
-%{php_pear_dir}
 %{php_pear_dir}/Archive
 %{php_pear_dir}/Console
 %{php_pear_dir}/Crypt
@@ -70,24 +69,10 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{php_pear_dir}/.registry}
 %files
 %defattr(644,root,root,755)
 %dir %{php_pear_dir}
-%dir %{php_pear_dir}/Archive
-%dir %{php_pear_dir}/Console
-%dir %{php_pear_dir}/Crypt
-%dir %{php_pear_dir}/HTML
-%dir %{php_pear_dir}/HTML/Template
-%dir %{php_pear_dir}/HTTP
-%dir %{php_pear_dir}/Image
-%dir %{php_pear_dir}/Math
-%dir %{php_pear_dir}/Net
-%dir %{php_pear_dir}/Numbers
-%dir %{php_pear_dir}/PEAR
-%dir %{php_pear_dir}/Science
-%dir %{php_pear_dir}/Services
-%dir %{php_pear_dir}/Text
-%dir %{php_pear_dir}/XML
-%dir %{php_pear_dir}/Validate
-%dir %{php_pear_dir}/Validate/Finance
+# LANG=C is in 'prep', so this should work in locales like et_EE where [a-z] does not specify whole alphabet
+%{php_pear_dir}/[A-Z]*
 
+# for php-pear-phpDocumentor@DEVEL, perhaps others
 %dir %{php_pear_dir}/data
 
 # registry
