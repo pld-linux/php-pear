@@ -2,7 +2,7 @@ Summary:	PEAR - PHP Extension and Application Repository
 Summary(pl):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
 Version:	1.0
-Release:	5
+Release:	5.5
 Epoch:		4
 License:	Public Domain
 Group:		Development/Languages/PHP
@@ -13,8 +13,6 @@ Obsoletes:	php4-pear
 Provides:	php4-pear = %{epoch}:%{version}-%{release}
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_sysconfdir /etc/pear
 
 %description
 PEAR - PHP Extension and Application Repository.
@@ -37,7 +35,7 @@ php-pear-* (php-pear-PEAR, php-pear-Archive_Tar, itp).
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{php_pear_dir}/data
+install -d $RPM_BUILD_ROOT%{php_pear_dir}/{data,tests}
 
 while read dir; do
 	install -d $RPM_BUILD_ROOT$dir
@@ -67,14 +65,24 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{php_pear_dir}/.registry}
 > $RPM_BUILD_ROOT%{php_pear_dir}/.filemap
 > $RPM_BUILD_ROOT%{php_pear_dir}/.lock
 
+%post
+umask 002
+if [ ! -e %{php_pear_dir}/.filemap ]; then
+	touch %{php_pear_dir}/.filemap
+fi
+if [ ! -e %{php_pear_dir}/.lock ]; then
+	touch %{php_pear_dir}/.lock
+fi
+
 %files
 %defattr(644,root,root,755)
 %dir %{php_pear_dir}
 # LANG=C is in 'prep', so this should work in locales like et_EE where [a-z] does not specify whole alphabet
 %{php_pear_dir}/[A-Z]*
 
-# for php-pear-phpDocumentor@DEVEL, perhaps others
+# see 'pear config-show'
 %dir %{php_pear_dir}/data
+%dir %{php_pear_dir}/tests
 
 # registry
 %dir %{php_pear_dir}/.registry
