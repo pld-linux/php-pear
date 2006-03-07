@@ -2,13 +2,14 @@ Summary:	PEAR - PHP Extension and Application Repository
 Summary(pl):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
 Version:	1.0
-Release:	12
+Release:	12.3
 Epoch:		4
 License:	Public Domain
 Group:		Development/Languages/PHP
 Obsoletes:	php-pear-additional_classes
 Obsoletes:	php4-pear
 Provides:	php4-pear = %{epoch}:%{version}-%{release}
+Conflicts:	php-pear-PEAR < 1:1.4.8-0.6
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -68,20 +69,6 @@ done <<EOF
 %{php_pear_dir}/Validate/Finance
 EOF
 
-# registry
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{php_pear_dir}/.registry}
-> $RPM_BUILD_ROOT%{php_pear_dir}/.filemap
-> $RPM_BUILD_ROOT%{php_pear_dir}/.lock
-
-%post
-umask 002
-if [ ! -e %{php_pear_dir}/.filemap ]; then
-	touch %{php_pear_dir}/.filemap
-fi
-if [ ! -e %{php_pear_dir}/.lock ]; then
-	touch %{php_pear_dir}/.lock
-fi
-
 %files
 %defattr(644,root,root,755)
 %dir %{php_pear_dir}
@@ -91,8 +78,3 @@ fi
 # see 'pear config-show'
 %dir %{php_pear_dir}/data
 %dir %{php_pear_dir}/tests
-
-# registry
-%dir %{php_pear_dir}/.registry
-%ghost %{php_pear_dir}/.filemap
-%ghost %{php_pear_dir}/.lock
