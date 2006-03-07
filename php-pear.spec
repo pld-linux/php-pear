@@ -2,7 +2,7 @@ Summary:	PEAR - PHP Extension and Application Repository
 Summary(pl):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
 Version:	1.0
-Release:	12.3
+Release:	12.4
 Epoch:		4
 License:	Public Domain
 Group:		Development/Languages/PHP
@@ -71,10 +71,4 @@ EOF
 
 %files
 %defattr(644,root,root,755)
-%dir %{php_pear_dir}
-# LANG=C is in 'prep', so this should work in locales like et_EE where [a-z] does not specify whole alphabet
-%{php_pear_dir}/[A-Z]*
-
-# see 'pear config-show'
-%dir %{php_pear_dir}/data
-%dir %{php_pear_dir}/tests
+%{php_pear_dir}
