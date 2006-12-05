@@ -6,7 +6,6 @@ Release:	15
 Epoch:		4
 License:	Public Domain
 Group:		Development/Languages/PHP
-Provides:	php4-pear = %{epoch}:%{version}-%{release}
 Obsoletes:	php-pear-additional_classes
 Obsoletes:	php4-pear
 Conflicts:	php-pear-PEAR < 1:1.4.6-1.3
