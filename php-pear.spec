@@ -1,5 +1,5 @@
 Summary:	PEAR - PHP Extension and Application Repository
-Summary(pl):	PEAR - rozszerzenie PHP i repozytorium aplikacji
+Summary(pl.UTF-8):   PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
 Version:	1.0
 Release:	15
@@ -20,13 +20,13 @@ If you want to use base PEAR classes (PEAR.php, PEAR/*.php), that come
 with PHP, please install appropriate php-pear-* (php-pear-PEAR,
 php-PEAR-Archive_Tar, etc) packages.
 
-%description -l pl
+%description -l pl.UTF-8
 PEAR (PHP Extension and Application Repository) - rozszerzenie PHP i
 repozytorium aplikacji.
 
-Nale¿y pamiêtaæ, ¿e ten pakiet dostarcza tylko podstawow± strukturê
-katalogów. Aby u¿yæ podstawowych klas PEAR (PEAR.php PEAR/*.php),
-dostarczanych z PHP, nale¿y zainstalowaæ odpowiednie pakiety
+NaleÅ¼y pamiÄ™taÄ‡, Å¼e ten pakiet dostarcza tylko podstawowÄ… strukturÄ™
+katalogÃ³w. Aby uÅ¼yÄ‡ podstawowych klas PEAR (PEAR.php PEAR/*.php),
+dostarczanych z PHP, naleÅ¼y zainstalowaÄ‡ odpowiednie pakiety
 php-pear-* (php-pear-PEAR, php-pear-Archive_Tar, itp).
 
 %prep
