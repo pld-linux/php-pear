@@ -1,5 +1,5 @@
 Summary:	PEAR - PHP Extension and Application Repository
-Summary(pl.UTF-8):   PEAR - rozszerzenie PHP i repozytorium aplikacji
+Summary(pl.UTF-8):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
 Version:	1.0
 Release:	15
