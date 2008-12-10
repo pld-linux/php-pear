@@ -2,10 +2,12 @@ Summary:	PEAR - PHP Extension and Application Repository
 Summary(pl.UTF-8):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
 Version:	1.1
-Release:	1
+Release:	2
 Epoch:		4
 License:	Public Domain
 Group:		Development/Languages/PHP
+Source0:	http://pear.phpunit.de/channel.xml
+# Source0-md5:	b8ccb5f4727e7e6d4ee0c0e690f5423b
 Obsoletes:	php-pear-additional_classes
 Obsoletes:	php4-pear
 Conflicts:	php-pear-PEAR < 1:1.4.6-1.3
@@ -32,15 +34,24 @@ dostarczanych z PHP, należy zainstalować odpowiednie pakiety
 php-pear-* (php-pear-PEAR, php-pear-Archive_Tar, itp).
 
 %prep
+%setup -qcT
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{php_pear_dir}/{data,tests}
 
-# extra channel dirs
+# add extra channels
+pear -c pearrc config-set php_dir $RPM_BUILD_ROOT/%{php_pear_dir}
+pear -c pearrc channel-add %{SOURCE0}
+
+rm -f $RPM_BUILD_ROOT%{php_pear_dir}/.channels/.alias/{pear,pecl}.txt
+rm -f $RPM_BUILD_ROOT%{php_pear_dir}/.channels/__uri.reg
+rm -f $RPM_BUILD_ROOT%{php_pear_dir}/.channels/{pear,pecl}.php.net.reg
+rm -f $RPM_BUILD_ROOT%{php_pear_dir}/{.depdb*,.filemap,.lock}
+
+# TODO:
 install -d $RPM_BUILD_ROOT%{_registrydir}/.channel.pear.phpdb.org
 install -d $RPM_BUILD_ROOT%{_registrydir}/.channel.pear.phing.info
-install -d $RPM_BUILD_ROOT%{_registrydir}/.channel.pear.phpunit.de
 
 while read dir; do
 	install -d $RPM_BUILD_ROOT$dir
@@ -92,4 +103,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%{php_pear_dir}
+%dir %{php_pear_dir}
+%{php_pear_dir}/*
+
+%dir %{php_pear_dir}/.registry
+%dir %{php_pear_dir}/.channels
+%dir %{php_pear_dir}/.channels/.alias
+
+%{php_pear_dir}/.channels/.alias/phpunit.txt
+%{php_pear_dir}/.channels/pear.phpunit.de.reg
