@@ -2,7 +2,7 @@ Summary:	PEAR - PHP Extension and Application Repository
 Summary(pl.UTF-8):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
 Version:	1.2
-Release:	1
+Release:	2
 Epoch:		4
 License:	Public Domain
 Group:		Development/Languages/PHP
@@ -19,13 +19,15 @@ Conflicts:	php-pear-PEAR < 1:1.7.2-10
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_registrydir	%{php_pear_dir}/.registry
-
 %define		__reg_provides	php %{SOURCE10}
 
+# find channel provides
 %define		_use_internal_dependency_generator 0
 %define		__find_provides %{__reg_provides}
 %define		__find_requires %{nil}
+
+# avoid rpm 4.4.9 adding rm -rf buildroot, we need the dirs to check consistency
+%define		__spec_clean_body	%{nil}
 
 %description
 PEAR - PHP Extension and Application Repository.
@@ -57,18 +59,6 @@ pear -c pearrc channel-add %{SOURCE0}
 pear -c pearrc channel-add %{SOURCE1}
 pear -c pearrc channel-add %{SOURCE2}
 pear -c pearrc channel-add %{SOURCE3}
-
-# install PEAR registry files
-install -d $RPM_BUILD_ROOT%{php_pear_dir}/.channels/.alias
-install -d $RPM_BUILD_ROOT%{_registrydir}/{.channel.{__uri,pecl.php.net},channels/.alias}
-touch $RPM_BUILD_ROOT%{php_pear_dir}/.depdb{,lock}
-touch $RPM_BUILD_ROOT%{php_pear_dir}/.channels/{__uri,{pear,pecl}.php.net}.reg
-touch $RPM_BUILD_ROOT%{php_pear_dir}/.channels/.alias/{pear,pecl}.txt
-touch $RPM_BUILD_ROOT%{php_pear_dir}/.filemap
-touch $RPM_BUILD_ROOT%{php_pear_dir}/.lock
-
-# TODO:
-install -d $RPM_BUILD_ROOT%{_registrydir}/.channel.pear.phpdb.org
 
 while read dir; do
 	install -d $RPM_BUILD_ROOT$dir
@@ -116,12 +106,24 @@ done <<EOF
 %{php_pear_dir}/XML
 EOF
 
-%if 0
-do
-%endif
-
 %clean
-rm -rf $RPM_BUILD_ROOT
+cd $RPM_BUILD_ROOT%{php_pear_dir}
+
+check_channel_dirs() {
+	RPMFILE=%{name}-%{version}-%{release}.%{_target_cpu}.rpm
+	TMPFILE=$(mktemp)
+	find .channels .registry -type d | LC_ALL=C sort > $TMPFILE
+
+	# find finds also '.', so use option -B for diff
+	if rpm -qplv %{_rpmdir}/$RPMFILE | sed -ne '/^d/s,^.*%{php_pear_dir}/\.,.,p' | LC_ALL=C sort | diff -uB $TMPFILE - ; then
+		rm -rf $RPM_BUILD_ROOT
+	else
+		echo -e "\nNot so good, some channel directories are not included in package\n"
+		exit 1
+	fi
+	rm -f $TMPFILE
+}
+check_channel_dirs
 
 %files
 %defattr(644,root,root,755)
@@ -144,7 +146,6 @@ rm -rf $RPM_BUILD_ROOT
 %{php_pear_dir}/.channels/pear.php.net.reg
 
 %{php_pear_dir}/.channels/.alias/pecl.txt
-
 %{php_pear_dir}/.channels/pecl.php.net.reg
 %{php_pear_dir}/.registry/.channel.pecl.php.net
 
@@ -162,3 +163,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %{php_pear_dir}/.channels/.alias/firephp.txt
 %{php_pear_dir}/.channels/pear.firephp.org.reg
+%{php_pear_dir}/.registry/.channel.pear.firephp.org
