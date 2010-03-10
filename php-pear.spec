@@ -1,8 +1,8 @@
 Summary:	PEAR - PHP Extension and Application Repository
 Summary(pl.UTF-8):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
-Version:	1.1
-Release:	6
+Version:	1.2
+Release:	1
 Epoch:		4
 License:	Public Domain
 Group:		Development/Languages/PHP
@@ -10,6 +10,8 @@ Source0:	channel-phpunit.xml
 Source1:	channel-phing.xml
 Source2:	channel-phpdb.xml
 Source3:	channel-firephp.xml
+Source10:	php-channel-prov.php
+BuildRequires:	/usr/bin/php
 BuildRequires:	php-pear-PEAR
 Obsoletes:	php-pear-additional_classes
 Obsoletes:	php4-pear
@@ -18,6 +20,12 @@ BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_registrydir	%{php_pear_dir}/.registry
+
+%define		__reg_provides	php %{SOURCE10}
+
+%define		_use_internal_dependency_generator 0
+%define		__find_provides %{__reg_provides}
+%define		__find_requires %{nil}
 
 %description
 PEAR - PHP Extension and Application Repository.
