@@ -9,6 +9,7 @@ Group:		Development/Languages/PHP
 Source0:	channel-phpunit.xml
 Source1:	channel-phing.xml
 Source2:	channel-phpdb.xml
+Source3:	channel-firephp.xml
 BuildRequires:	php-pear-PEAR
 Obsoletes:	php-pear-additional_classes
 Obsoletes:	php4-pear
@@ -43,10 +44,11 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{php_pear_dir}/{bin,data,tests}
 
 # add extra channels
-pear -c pearrc config-set php_dir $RPM_BUILD_ROOT/%{php_pear_dir}
+pear -c pearrc config-set php_dir $RPM_BUILD_ROOT%{php_pear_dir}
 pear -c pearrc channel-add %{SOURCE0}
 pear -c pearrc channel-add %{SOURCE1}
 pear -c pearrc channel-add %{SOURCE2}
+pear -c pearrc channel-add %{SOURCE3}
 
 rm -f $RPM_BUILD_ROOT%{php_pear_dir}/.channels/.alias/{pear,pecl}.txt
 rm -f $RPM_BUILD_ROOT%{php_pear_dir}/.channels/__uri.reg
@@ -125,3 +127,6 @@ rm -rf $RPM_BUILD_ROOT
 %{php_pear_dir}/.channels/.alias/phpdb.txt
 %{php_pear_dir}/.channels/pear.phpdb.org.reg
 %{php_pear_dir}/.registry/.channel.pear.phpdb.org
+
+%{php_pear_dir}/.channels/.alias/firephp.txt
+%{php_pear_dir}/.channels/pear.firephp.org.reg
