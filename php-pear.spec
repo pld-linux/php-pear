@@ -15,7 +15,7 @@ BuildRequires:	/usr/bin/php
 BuildRequires:	php-pear-PEAR
 Obsoletes:	php-pear-additional_classes
 Obsoletes:	php4-pear
-Conflicts:	php-pear-PEAR < 1:1.4.6-1.3
+Conflicts:	php-pear-PEAR < 1:1.7.2-10
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -58,10 +58,14 @@ pear -c pearrc channel-add %{SOURCE1}
 pear -c pearrc channel-add %{SOURCE2}
 pear -c pearrc channel-add %{SOURCE3}
 
-rm -f $RPM_BUILD_ROOT%{php_pear_dir}/.channels/.alias/{pear,pecl}.txt
-rm -f $RPM_BUILD_ROOT%{php_pear_dir}/.channels/__uri.reg
-rm -f $RPM_BUILD_ROOT%{php_pear_dir}/.channels/{pear,pecl}.php.net.reg
-rm -f $RPM_BUILD_ROOT%{php_pear_dir}/{.depdb*,.filemap,.lock}
+# install PEAR registry files
+install -d $RPM_BUILD_ROOT%{php_pear_dir}/.channels/.alias
+install -d $RPM_BUILD_ROOT%{_registrydir}/{.channel.{__uri,pecl.php.net},channels/.alias}
+touch $RPM_BUILD_ROOT%{php_pear_dir}/.depdb{,lock}
+touch $RPM_BUILD_ROOT%{php_pear_dir}/.channels/{__uri,{pear,pecl}.php.net}.reg
+touch $RPM_BUILD_ROOT%{php_pear_dir}/.channels/.alias/{pear,pecl}.txt
+touch $RPM_BUILD_ROOT%{php_pear_dir}/.filemap
+touch $RPM_BUILD_ROOT%{php_pear_dir}/.lock
 
 # TODO:
 install -d $RPM_BUILD_ROOT%{_registrydir}/.channel.pear.phpdb.org
@@ -112,6 +116,10 @@ done <<EOF
 %{php_pear_dir}/XML
 EOF
 
+%if 0
+do
+%endif
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -120,9 +128,25 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{php_pear_dir}
 %{php_pear_dir}/*
 
+%ghost %{php_pear_dir}/.depdblock
+%ghost %{php_pear_dir}/.depdb
+%ghost %{php_pear_dir}/.filemap
+%ghost %{php_pear_dir}/.lock
+
 %dir %{php_pear_dir}/.registry
 %dir %{php_pear_dir}/.channels
 %dir %{php_pear_dir}/.channels/.alias
+
+%{php_pear_dir}/.channels/__uri.reg
+%{php_pear_dir}/.registry/.channel.__uri
+
+%{php_pear_dir}/.channels/.alias/pear.txt
+%{php_pear_dir}/.channels/pear.php.net.reg
+
+%{php_pear_dir}/.channels/.alias/pecl.txt
+
+%{php_pear_dir}/.channels/pecl.php.net.reg
+%{php_pear_dir}/.registry/.channel.pecl.php.net
 
 %{php_pear_dir}/.channels/.alias/phpunit.txt
 %{php_pear_dir}/.channels/pear.phpunit.de.reg
