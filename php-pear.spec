@@ -1,8 +1,8 @@
 Summary:	PEAR - PHP Extension and Application Repository
 Summary(pl.UTF-8):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
-Version:	1.2
-Release:	2
+Version:	1.3
+Release:	1
 Epoch:		4
 License:	Public Domain
 Group:		Development/Languages/PHP
@@ -10,6 +10,7 @@ Source0:	channel-phpunit.xml
 Source1:	channel-phing.xml
 Source2:	channel-phpdb.xml
 Source3:	channel-firephp.xml
+Source4:	channel-symfony-project.xml
 Source10:	php-channel-prov.php
 BuildRequires:	/usr/bin/php
 BuildRequires:	php-pear-PEAR
@@ -59,6 +60,7 @@ pear -c pearrc channel-add %{SOURCE0}
 pear -c pearrc channel-add %{SOURCE1}
 pear -c pearrc channel-add %{SOURCE2}
 pear -c pearrc channel-add %{SOURCE3}
+pear -c pearrc channel-add %{SOURCE4}
 
 while read dir; do
 	install -d $RPM_BUILD_ROOT$dir
@@ -139,6 +141,7 @@ check_channel_dirs
 %dir %{php_pear_dir}/.channels
 %dir %{php_pear_dir}/.channels/.alias
 
+# core channels
 %{php_pear_dir}/.channels/__uri.reg
 %{php_pear_dir}/.registry/.channel.__uri
 
@@ -149,6 +152,11 @@ check_channel_dirs
 %{php_pear_dir}/.channels/pecl.php.net.reg
 %{php_pear_dir}/.registry/.channel.pecl.php.net
 
+%{php_pear_dir}/.channels/.alias/phpdocs.txt
+%{php_pear_dir}/.channels/doc.php.net.reg
+%{php_pear_dir}/.registry/.channel.doc.php.net
+
+# addon channels
 %{php_pear_dir}/.channels/.alias/phpunit.txt
 %{php_pear_dir}/.channels/pear.phpunit.de.reg
 %{php_pear_dir}/.registry/.channel.pear.phpunit.de
@@ -164,3 +172,7 @@ check_channel_dirs
 %{php_pear_dir}/.channels/.alias/firephp.txt
 %{php_pear_dir}/.channels/pear.firephp.org.reg
 %{php_pear_dir}/.registry/.channel.pear.firephp.org
+
+%{php_pear_dir}/.channels/.alias/symfony.txt
+%{php_pear_dir}/.channels/pear.symfony-project.com.reg
+%{php_pear_dir}/.registry/.channel.pear.symfony-project.com
