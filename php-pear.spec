@@ -1,17 +1,18 @@
 Summary:	PEAR - PHP Extension and Application Repository
 Summary(pl.UTF-8):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
-Version:	1.3
-Release:	6
+Version:	1.3.1
+Release:	1
 Epoch:		4
 License:	Public Domain
 Group:		Development/Languages/PHP
-Source0:	channel-phpunit.xml
+Source0:	php-channel-prov.php
 Source1:	channel-phing.xml
 Source2:	channel-phpdb.xml
 Source3:	channel-firephp.xml
 Source4:	channel-symfony-project.xml
-Source10:	php-channel-prov.php
+Source5:	channel-phpunit.xml
+Source6:	channel-phpseclib.xml
 BuildRequires:	/usr/bin/php
 BuildRequires:	php-pear-PEAR >= 1:1.9.0
 BuildRequires:	rpmbuild(macros) >= 1.570
@@ -21,7 +22,7 @@ Conflicts:	php-pear-PEAR < 1:1.7.2-10
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		__reg_provides	php %{SOURCE10}
+%define		__reg_provides	php %{SOURCE0}
 
 # find channel provides
 %define		_use_internal_dependency_generator 0
@@ -57,11 +58,12 @@ install -d $RPM_BUILD_ROOT%{php_pear_dir}/{.registry,bin,data,tests}
 
 # add extra channels
 %{__pear} -c pearrc config-set php_dir $RPM_BUILD_ROOT%{php_pear_dir}
-%{__pear} -c pearrc channel-add %{SOURCE0}
 %{__pear} -c pearrc channel-add %{SOURCE1}
 %{__pear} -c pearrc channel-add %{SOURCE2}
 %{__pear} -c pearrc channel-add %{SOURCE3}
 %{__pear} -c pearrc channel-add %{SOURCE4}
+%{__pear} -c pearrc channel-add %{SOURCE5}
+%{__pear} -c pearrc channel-add %{SOURCE6}
 
 while read dir; do
 	install -d $RPM_BUILD_ROOT$dir
@@ -178,3 +180,7 @@ check_channel_dirs
 %{php_pear_dir}/.channels/.alias/symfony.txt
 %{php_pear_dir}/.channels/pear.symfony-project.com.reg
 %{php_pear_dir}/.registry/.channel.pear.symfony-project.com
+
+%{php_pear_dir}/.channels/.alias/phpseclib.txt
+%{php_pear_dir}/.channels/phpseclib.sourceforge.net.reg
+%{php_pear_dir}/.registry/.channel.phpseclib.sourceforge.net
