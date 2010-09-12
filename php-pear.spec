@@ -1,7 +1,7 @@
 Summary:	PEAR - PHP Extension and Application Repository
 Summary(pl.UTF-8):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
-Version:	1.3.1
+Version:	1.3.2
 Release:	1
 Epoch:		4
 License:	Public Domain
@@ -13,6 +13,7 @@ Source3:	channel-firephp.xml
 Source4:	channel-symfony-project.xml
 Source5:	channel-phpunit.xml
 Source6:	channel-phpseclib.xml
+Source7:	channel-horde.xml
 BuildRequires:	/usr/bin/php
 BuildRequires:	php-pear-PEAR >= 1:1.9.0
 BuildRequires:	rpmbuild(macros) >= 1.570
@@ -64,6 +65,7 @@ install -d $RPM_BUILD_ROOT%{php_pear_dir}/{.registry,bin,data,tests}
 %{__pear} -c pearrc channel-add %{SOURCE4}
 %{__pear} -c pearrc channel-add %{SOURCE5}
 %{__pear} -c pearrc channel-add %{SOURCE6}
+%{__pear} -c pearrc channel-add %{SOURCE7}
 
 while read dir; do
 	install -d $RPM_BUILD_ROOT$dir
@@ -184,3 +186,7 @@ check_channel_dirs
 %{php_pear_dir}/.channels/.alias/phpseclib.txt
 %{php_pear_dir}/.channels/phpseclib.sourceforge.net.reg
 %{php_pear_dir}/.registry/.channel.phpseclib.sourceforge.net
+
+%{php_pear_dir}/.channels/.alias/horde.txt
+%{php_pear_dir}/.channels/pear.horde.org.reg
+%{php_pear_dir}/.registry/.channel.pear.horde.org
