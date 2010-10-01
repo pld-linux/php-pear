@@ -1,14 +1,15 @@
 #!/bin/sh
-urls="
-	http://pear.firephp.org/channel.xml
-	http://pear.phing.info/channel.xml
-	http://pear.phpdb.org/channel.xml
-	http://phpseclib.sourceforge.net/channel.xml
-	http://pear.phpunit.de/channel.xml
-	http://pear.symfony-project.com/channel.xml
-	http://pear.roundcube.net/channel.xml
+channels="
+	pear.firephp.org
+	pear.phing.info
+	pear.phpdb.org
+	phpseclib.sourceforge.net
+	pear.phpunit.de
+	pear.symfony-project.com
+	pear.roundcube.net
 "
-for url in $urls; do
+for channel in $channels; do
+	url=http://$channel/channel.xml
 	wget -q -O tmp.xml $url || continue
 	alias=$(sed -nre 's,.*<suggestedalias>(.+)</suggestedalias>.*$,\1,p' tmp.xml)
 	mv -f tmp.xml channel-$alias.xml
