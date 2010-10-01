@@ -7,6 +7,7 @@ channels="
 	pear.phpunit.de
 	pear.symfony-project.com
 	pear.roundcube.net
+	components.ez.no
 "
 for channel in $channels; do
 	url=http://$channel/channel.xml
