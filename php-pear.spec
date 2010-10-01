@@ -7,6 +7,7 @@ Epoch:		4
 License:	Public Domain
 Group:		Development/Languages/PHP
 Source0:	php-channel-prov.php
+Source100:	update-channels.sh
 Source1:	channel-phing.xml
 Source2:	channel-phpdb.xml
 Source3:	channel-firephp.xml
