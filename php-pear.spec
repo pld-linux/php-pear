@@ -10,11 +10,11 @@ Source0:	php-channel-prov.php
 Source1:	channel-phing.xml
 Source2:	channel-phpdb.xml
 Source3:	channel-firephp.xml
-Source4:	channel-symfony-project.xml
+Source4:	channel-symfony.xml
 Source5:	channel-phpunit.xml
 Source6:	channel-phpseclib.xml
 Source7:	channel-horde.xml
-Source8:	channel-roundcube.xml
+Source8:	channel-rc.xml
 BuildRequires:	/usr/bin/php
 BuildRequires:	php-pear-PEAR >= 1:1.9.0
 BuildRequires:	rpmbuild(macros) >= 1.570
