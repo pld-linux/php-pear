@@ -5,6 +5,7 @@ channels="
 	pear.phing.info
 	pear.phpdb.org
 	pear.phpunit.de
+	pear.propelorm.org
 	pear.roundcube.net
 	pear.symfony-project.com
 	phpseclib.sourceforge.net
