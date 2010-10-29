@@ -63,16 +63,9 @@ install -d $RPM_BUILD_ROOT%{php_pear_dir}/{.registry,bin,data,tests}
 
 # add extra channels
 %{__pear} -c pearrc config-set php_dir $RPM_BUILD_ROOT%{php_pear_dir}
-%{__pear} -c pearrc channel-add %{SOURCE1}
-%{__pear} -c pearrc channel-add %{SOURCE2}
-%{__pear} -c pearrc channel-add %{SOURCE3}
-%{__pear} -c pearrc channel-add %{SOURCE4}
-%{__pear} -c pearrc channel-add %{SOURCE5}
-%{__pear} -c pearrc channel-add %{SOURCE6}
-%{__pear} -c pearrc channel-add %{SOURCE7}
-%{__pear} -c pearrc channel-add %{SOURCE8}
-%{__pear} -c pearrc channel-add %{SOURCE9}
-%{__pear} -c pearrc channel-add %{SOURCE10}
+for xml in $(awk '/^Source[0-9]+:.+channel-.+.xml$/ {print $NF}' %{_specdir}/%{name}.spec); do
+	%{__pear} -c pearrc channel-add %{_sourcedir}/$xml
+done
 
 while read dir; do
 	install -d $RPM_BUILD_ROOT$dir
