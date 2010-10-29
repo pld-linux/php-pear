@@ -1,13 +1,13 @@
 #!/bin/sh
 channels="
+	components.ez.no
 	pear.firephp.org
 	pear.phing.info
 	pear.phpdb.org
-	phpseclib.sourceforge.net
 	pear.phpunit.de
-	pear.symfony-project.com
 	pear.roundcube.net
-	components.ez.no
+	pear.symfony-project.com
+	phpseclib.sourceforge.net
 "
 for channel in $channels; do
 	url=http://$channel/channel.xml
