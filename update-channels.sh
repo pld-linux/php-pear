@@ -2,6 +2,7 @@
 channels="
 	components.ez.no
 	pear.firephp.org
+	pear.horde.org
 	pear.phing.info
 	pear.phpdb.org
 	pear.phpunit.de
