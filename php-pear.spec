@@ -2,7 +2,7 @@ Summary:	PEAR - PHP Extension and Application Repository
 Summary(pl.UTF-8):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
 Version:	1.3.6
-Release:	1
+Release:	2
 Epoch:		4
 License:	Public Domain
 Group:		Development/Languages/PHP
@@ -89,6 +89,9 @@ done <<EOF
 %{php_pear_dir}/HTTP
 %{php_pear_dir}/HTTP/WebDAV
 %{php_pear_dir}/HTTP/WebDAV/Tools
+%{php_pear_dir}/Horde
+%{php_pear_dir}/Horde/Text
+%{php_pear_dir}/Horde/Xml
 %{php_pear_dir}/I18N
 %{php_pear_dir}/Image
 %{php_pear_dir}/MP3
