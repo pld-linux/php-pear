@@ -1,6 +1,7 @@
 #!/bin/sh
 channels="
 	components.ez.no
+	pear.docblox-project.org
 	pear.firephp.org
 	pear.horde.org
 	pear.phing.info
