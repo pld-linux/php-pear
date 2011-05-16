@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<channel version="1.0">
+	<name>pear.michelf.com</name>
+	<suggestedalias>michelf</suggestedalias>
+	<summary>Michel Fortin’s PHP Projects</summary>
+	<servers><primary><rest>
+		<baseurl type='REST1.0'>http://pear.michelf.com/rest/</baseurl>
+	</rest></primary></servers>
+</channel>

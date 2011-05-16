@@ -4,6 +4,7 @@ channels="
 	pear.docblox-project.org
 	pear.firephp.org
 	pear.horde.org
+	pear.michelf.com
 	pear.phing.info
 	pear.phpdb.org
 	pear.phpunit.de
