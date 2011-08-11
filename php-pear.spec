@@ -1,8 +1,8 @@
 Summary:	PEAR - PHP Extension and Application Repository
 Summary(pl.UTF-8):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
-Version:	1.3.7
-Release:	3
+Version:	1.3.8
+Release:	1
 Epoch:		4
 License:	Public Domain
 Group:		Development/Languages/PHP
@@ -20,6 +20,8 @@ Source9:	channel-ezc.xml
 Source10:	channel-propel.xml
 Source11:	channel-docblox.xml
 Source12:	channel-michelf.xml
+Source13:	channel-phpmd.xml
+Source14:	channel-pdepend.xml
 BuildRequires:	/usr/bin/php
 BuildRequires:	php-pear-PEAR >= 1:1.9.0
 BuildRequires:	rpmbuild(macros) >= 1.570
@@ -216,3 +218,11 @@ check_channel_dirs
 %{php_pear_dir}/.channels/.alias/michelf.txt
 %{php_pear_dir}/.channels/pear.michelf.com.reg
 %{php_pear_dir}/.registry/.channel.pear.michelf.com
+
+%{php_pear_dir}/.channels/.alias/pdepend.txt
+%{php_pear_dir}/.channels/pear.pdepend.org.reg
+%{php_pear_dir}/.registry/.channel.pear.pdepend.org
+
+%{php_pear_dir}/.channels/.alias/phpmd.txt
+%{php_pear_dir}/.channels/pear.phpmd.org.reg
+%{php_pear_dir}/.registry/.channel.pear.phpmd.org

@@ -5,8 +5,10 @@ channels="
 	pear.firephp.org
 	pear.horde.org
 	pear.michelf.com
+	pear.pdepend.org
 	pear.phing.info
 	pear.phpdb.org
+	pear.phpmd.org
 	pear.phpunit.de
 	pear.propelorm.org
 	pear.roundcube.net
