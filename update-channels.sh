@@ -19,6 +19,7 @@ for channel in $channels; do
 	url=http://$channel/channel.xml
 	wget -q --timeout=10 --tries=1 -O tmp.xml $url || continue
 	alias=$(sed -nre 's,.*<suggestedalias>(.+)</suggestedalias>.*$,\1,p' tmp.xml)
+	sed -i -e 's,\r$,,g; s,\r,\n,g' tmp.xml
 	mv -f tmp.xml channel-$alias.xml
 done
 
