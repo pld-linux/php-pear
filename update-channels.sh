@@ -13,6 +13,7 @@ channels="
 	pear.propelorm.org
 	pear.roundcube.net
 	pear.symfony-project.com
+	pear.symfony.com
 	phpseclib.sourceforge.net
 "
 for channel in $channels; do
