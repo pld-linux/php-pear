@@ -15,6 +15,7 @@ channels="
 	pear.symfony-project.com
 	pear.symfony.com
 	phpseclib.sourceforge.net
+	saucelabs.github.com/pear
 "
 for channel in $channels; do
 	url=http://$channel/channel.xml
