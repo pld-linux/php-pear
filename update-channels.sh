@@ -14,6 +14,7 @@ channels="
 	pear.roundcube.net
 	pear.symfony-project.com
 	pear.symfony.com
+	pear.twig-project.org
 	phpseclib.sourceforge.net
 	saucelabs.github.com/pear
 "
