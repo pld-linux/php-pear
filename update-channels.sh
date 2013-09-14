@@ -17,6 +17,7 @@ channels="
 	pear.twig-project.org
 	phpseclib.sourceforge.net
 	saucelabs.github.com/pear
+	zustellzentrum.cweiske.de
 "
 for channel in $channels; do
 	url=http://$channel/channel.xml
