@@ -5,6 +5,7 @@ channels="
 	pear.firephp.org
 	pear.horde.org
 	pear.michelf.com
+	pear.netpirates.net
 	pear.pdepend.org
 	pear.phing.info
 	pear.phpdb.org
@@ -19,7 +20,7 @@ channels="
 	saucelabs.github.com/pear
 	zustellzentrum.cweiske.de
 "
-for channel in $channels; do
+for channel in ${@:-$channels}; do
 	url=http://$channel/channel.xml
 	wget -q --timeout=10 --tries=1 -O tmp.xml $url || continue
 	alias=$(sed -nre 's,.*<suggestedalias>(.+)</suggestedalias>.*$,\1,p' tmp.xml)
