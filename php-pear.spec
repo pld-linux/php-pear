@@ -1,8 +1,8 @@
 Summary:	PEAR - PHP Extension and Application Repository
 Summary(pl.UTF-8):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
-Version:	1.3.14
-Release:	2
+Version:	1.3.15
+Release:	1
 Epoch:		4
 License:	Public Domain
 Group:		Development/Languages/PHP
@@ -27,6 +27,7 @@ Source16:	channel-saucelabs.xml
 Source17:	channel-twig.xml
 Source18:	channel-zz.xml
 Source19:	channel-theseer.xml
+Source20:	channel-indeyets.xml
 BuildRequires:	/usr/bin/php
 BuildRequires:	php-pear-PEAR >= 1:1.9.0
 BuildRequires:	rpmbuild(macros) >= 1.570
@@ -270,3 +271,7 @@ check_channel_dirs
 %{php_pear_dir}/.channels/.alias/theseer.txt
 %{php_pear_dir}/.channels/pear.netpirates.net.reg
 %{php_pear_dir}/.registry/.channel.pear.netpirates.net
+
+%{php_pear_dir}/.channels/.alias/indeyets.txt
+%{php_pear_dir}/.channels/pear.indeyets.ru.reg
+%{php_pear_dir}/.registry/.channel.pear.indeyets.ru
