@@ -66,15 +66,19 @@ php-pear-* (php-pear-PEAR, php-pear-Archive_Tar, itp).
 %prep
 %setup -qcT
 
-%install
-rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{php_pear_dir}/{.registry,bin,data,tests}
+%build
+rm -rf pear
+install -d pear
 
 # add extra channels
-%{__pear} -c pearrc config-set php_dir $RPM_BUILD_ROOT%{php_pear_dir}
+%{__pear} -c pearrc config-set php_dir pear
 for xml in $(awk '/^Source[0-9]+:.+channel-.+.xml$/ {print $NF}' %{_specdir}/%{name}.spec); do
 	%{__pear} -c pearrc channel-add %{_sourcedir}/$xml
 done
+
+%install
+install -d $RPM_BUILD_ROOT%{php_pear_dir}/{.registry,bin,data,tests}
+cp -a pear/.??* $RPM_BUILD_ROOT%{php_pear_dir}
 
 while read dir; do
 	install -d $RPM_BUILD_ROOT$dir
@@ -131,22 +135,34 @@ done <<EOF
 EOF
 
 %clean
-cd $RPM_BUILD_ROOT%{php_pear_dir}
-
 check_channel_dirs() {
-	RPMFILE=%{name}-%{version}-%{release}.%{_target_cpu}.rpm
-	TMPFILE=$(mktemp)
-	find .channels .registry -type d | LC_ALL=C sort > $TMPFILE
+	local RPMFILE=%{name}-%{version}-%{release}.%{_target_cpu}.rpm
+	local installed=$(mktemp -t instXXXXXX.tmp)
+	local rpmfiles=$(mktemp -t rpmXXXXXX.tmp)
+	local rc diff=$(mktemp -t diffXXXXXX.tmp)
+
+	find $RPM_BUILD_ROOT%{php_pear_dir} | LC_ALL=C sort > $installed
+	sed -i -re "s#^$RPM_BUILD_ROOT%{php_pear_dir}/?##" $installed
+
+	rpm -qpl %{_rpmdir}/$RPMFILE |  LC_ALL=C sort > $rpmfiles
+	sed -i -re "s#^%{php_pear_dir}/?##" $rpmfiles
 
 	# find finds also '.', so use option -B for diff
-	if rpm -qplv %{_rpmdir}/$RPMFILE | sed -ne '/^d/s,^.*%{php_pear_dir}/\.,.,p' | LC_ALL=C sort | diff -uB $TMPFILE - ; then
-		rm -rf $RPM_BUILD_ROOT
-	else
-		echo -e "\nNot so good, some channel directories are not included in package\n"
+	if ! diff -uB $installed $rpmfiles > $diff; then
+		cat <<-EOF
+
+		ERROR: some files/directories are not included in package:
+
+		$(%{__sed} -ne '/^-[^-]/ s#^-#%%{php_pear_dir}/#p' $diff)
+
+		EOF
+
 		exit 1
 	fi
-	rm -f $TMPFILE
+	rm -rf $RPM_BUILD_ROOT
+	rm -f $installed $rpmfiles $diff
 }
+
 check_channel_dirs
 
 %files
