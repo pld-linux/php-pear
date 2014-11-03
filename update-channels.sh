@@ -10,6 +10,7 @@ channels="
 	pear.pdepend.org
 	pear.phing.info
 	pear.phpdb.org
+	pear.phpdoc.org
 	pear.phpmd.org
 	pear.phpunit.de
 	pear.propelorm.org
