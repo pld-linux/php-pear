@@ -22,12 +22,23 @@ channels="
 	saucelabs.github.com/pear
 	zustellzentrum.cweiske.de
 "
+
+fetch() {
+	local url="$1"
+	local target="$2"
+	wget -q --timeout=10 --tries=1 ${target:+-O "$target"} "$url"
+}
+
 for channel in ${@:-$channels}; do
 	url=http://$channel/channel.xml
-	wget -q --timeout=10 --tries=1 -O tmp.xml $url || continue
+	fetch $url tmp.xml  || continue
 	alias=$(sed -nre 's,.*<suggestedalias>(.+)</suggestedalias>.*$,\1,p' tmp.xml)
 	sed -i -e 's,\r$,,g; s,\r,\n,g' tmp.xml
 	mv -f tmp.xml channel-$alias.xml
+
+	url=http://$channel/feed.xml
+	fetch $url tmp.xml  || continue
+	mv -f tmp.xml feed-$alias.xml
 done
 
 rm -f tmp.xml
