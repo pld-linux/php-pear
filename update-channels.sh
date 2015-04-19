@@ -1,5 +1,6 @@
 #!/bin/sh
 channels="
+	bartlett.laurent-laville.org
 	components.ez.no
 	pear.docblox-project.org
 	pear.firephp.org
