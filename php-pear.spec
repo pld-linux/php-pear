@@ -39,7 +39,7 @@ Conflicts:	php-pear-PEAR < 1:1.7.2-10
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		__reg_provides	php %{SOURCE0}
+%define		__reg_provides	%{__php} %{SOURCE0}
 
 # find channel provides
 %define		_use_internal_dependency_generator 0
