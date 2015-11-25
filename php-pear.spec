@@ -1,7 +1,7 @@
 Summary:	PEAR - PHP Extension and Application Repository
 Summary(pl.UTF-8):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
-Version:	1.3.17
+Version:	1.4
 Release:	1
 Epoch:		4
 License:	Public Domain
@@ -83,6 +83,8 @@ done
 install -d $RPM_BUILD_ROOT%{php_pear_dir}/{.registry,bin,data,tests}
 cp -a pear/.??* $RPM_BUILD_ROOT%{php_pear_dir}
 
+install -d $RPM_BUILD_ROOT%{php_data_dir}/Symfony/{Bridge,Component}
+
 while read dir; do
 	install -d $RPM_BUILD_ROOT$dir
 done <<EOF
@@ -147,7 +149,11 @@ check_channel_dirs() {
 	find $RPM_BUILD_ROOT%{php_pear_dir} | LC_ALL=C sort > $installed
 	sed -i -re "s#^$RPM_BUILD_ROOT%{php_pear_dir}/?##" $installed
 
-	rpm -qpl %{_rpmdir}/$RPMFILE |  LC_ALL=C sort > $rpmfiles
+	rpm -qpl %{_rpmdir}/$RPMFILE | LC_ALL=C sort > $rpmfiles
+
+	# temp hack to exclude non-pear dirs
+	%{__sed} -i -e 's#%{php_data_dir}/.*##' $rpmfiles
+
 	sed -i -re "s#^%{php_pear_dir}/?##" $rpmfiles
 
 	# find finds also '.', so use option -B for diff
@@ -173,6 +179,12 @@ check_channel_dirs
 %dir %{php_pear_dir}
 %{php_pear_dir}/*
 
+# other php dirs
+%dir %{php_data_dir}/Symfony
+%dir %{php_data_dir}/Symfony/Bridge
+%dir %{php_data_dir}/Symfony/Component
+
+# PEAR state files
 %ghost %{php_pear_dir}/.depdblock
 %ghost %{php_pear_dir}/.depdb
 %ghost %{php_pear_dir}/.filemap
