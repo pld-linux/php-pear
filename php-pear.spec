@@ -2,7 +2,7 @@ Summary:	PEAR - PHP Extension and Application Repository
 Summary(pl.UTF-8):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
 Version:	1.4
-Release:	1
+Release:	2
 Epoch:		4
 License:	Public Domain
 Group:		Development/Languages/PHP
@@ -33,6 +33,7 @@ Source22:	channel-bartlett.xml
 BuildRequires:	/usr/bin/php
 BuildRequires:	php-pear-PEAR >= 1:1.9.0
 BuildRequires:	rpmbuild(macros) >= 1.570
+Requires:	php-dirs >= 1.6-1
 Obsoletes:	php-pear-additional_classes
 Obsoletes:	php4-pear
 Conflicts:	php-pear-PEAR < 1:1.7.2-10
@@ -82,8 +83,6 @@ done
 %install
 install -d $RPM_BUILD_ROOT%{php_pear_dir}/{.registry,bin,data,tests}
 cp -a pear/.??* $RPM_BUILD_ROOT%{php_pear_dir}
-
-install -d $RPM_BUILD_ROOT%{php_data_dir}/Symfony/{Bridge,Component}
 
 while read dir; do
 	install -d $RPM_BUILD_ROOT$dir
@@ -151,9 +150,6 @@ check_channel_dirs() {
 
 	rpm -qpl %{_rpmdir}/$RPMFILE | LC_ALL=C sort > $rpmfiles
 
-	# temp hack to exclude non-pear dirs
-	%{__sed} -i -e 's#%{php_data_dir}/.*##' $rpmfiles
-
 	sed -i -re "s#^%{php_pear_dir}/?##" $rpmfiles
 
 	# find finds also '.', so use option -B for diff
@@ -178,11 +174,6 @@ check_channel_dirs
 %defattr(644,root,root,755)
 %dir %{php_pear_dir}
 %{php_pear_dir}/*
-
-# other php dirs
-%dir %{php_data_dir}/Symfony
-%dir %{php_data_dir}/Symfony/Bridge
-%dir %{php_data_dir}/Symfony/Component
 
 # PEAR state files
 %ghost %{php_pear_dir}/.depdblock
