@@ -56,7 +56,7 @@ PEAR - PHP Extension and Application Repository.
 Please note that this package provides only basic directory structure.
 If you want to use base PEAR classes (PEAR.php, PEAR/*.php), that come
 with PHP, please install appropriate php-pear-* (php-pear-PEAR,
-php-PEAR-Archive_Tar, etc) packages.
+php-pear-Archive_Tar, etc) packages.
 
 %description -l pl.UTF-8
 PEAR (PHP Extension and Application Repository) - rozszerzenie PHP i
