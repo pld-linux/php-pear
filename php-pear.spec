@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_with	bootstrap	# bootstrap build without PEAR installed (for first php-pear-PEAR installation)
+
 Summary:	PEAR - PHP Extension and Application Repository
 Summary(pl.UTF-8):	PEAR - rozszerzenie PHP i repozytorium aplikacji
 Name:		php-pear
@@ -30,8 +34,10 @@ Source19:	channel-theseer.xml
 Source20:	channel-indeyets.xml
 Source21:	channel-phpdoc.xml
 Source22:	channel-bartlett.xml
+%if %{without bootstrap}
 BuildRequires:	/usr/bin/php
 BuildRequires:	php-pear-PEAR >= 1:1.9.0
+%endif
 BuildRequires:	rpmbuild(macros) >= 1.570
 Requires:	php-dirs >= 1.6-1
 Obsoletes:	php-pear-additional_classes
@@ -74,15 +80,21 @@ php-pear-* (php-pear-PEAR, php-pear-Archive_Tar, itp).
 rm -rf pear
 install -d pear
 
+%if %{without bootstrap}
 # add extra channels
 %{__pear} -c pearrc config-set php_dir pear
 for xml in $(awk '/^Source[0-9]+:.+channel-.+.xml$/ {print $NF}' %{_specdir}/%{name}.spec); do
 	%{__pear} -c pearrc channel-add %{_sourcedir}/$xml
 done
+%endif
 
 %install
-install -d $RPM_BUILD_ROOT%{php_pear_dir}/{.registry,bin,data,tests}
+install -d $RPM_BUILD_ROOT%{php_pear_dir}/{.channels/.alias,.registry,bin,data,tests}
+%if %{without bootstrap}
 cp -a pear/.??* $RPM_BUILD_ROOT%{php_pear_dir}
+%else
+touch $RPM_BUILD_ROOT%{php_pear_dir}/{.depdblock,.depdb,.filemap,.lock}
+%endif
 
 while read dir; do
 	install -d $RPM_BUILD_ROOT$dir
@@ -185,6 +197,7 @@ check_channel_dirs
 %dir %{php_pear_dir}/.channels
 %dir %{php_pear_dir}/.channels/.alias
 
+%if %{without bootstrap}
 # core channels
 %{php_pear_dir}/.channels/__uri.reg
 %{php_pear_dir}/.registry/.channel.__uri
@@ -288,3 +301,4 @@ check_channel_dirs
 %{php_pear_dir}/.channels/.alias/bartlett.txt
 %{php_pear_dir}/.channels/bartlett.laurent-laville.org.reg
 %{php_pear_dir}/.registry/.channel.bartlett.laurent-laville.org
+%endif
